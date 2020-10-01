@@ -1,6 +1,7 @@
 // Practice your JS here!
 let addMusic = false;
-let mainDiv = document.querySelector("#main-div")
+let row = document.querySelector(".row")
+
 let cartDiv = document.querySelector("#cart-div")
 
 fetch("http://localhost:3000/musics")
@@ -15,20 +16,32 @@ fetch("http://localhost:3000/musics")
 
 let turnMusicToHTML = (music) => {
      let musicCardDiv = document.createElement("div")
-    //     musicCardDiv.classlist.add("card")
-  
-    let musicTitleH2 = document.createElement("h2")
-    musicTitleH2.innerText = music.title
-   
+        musicCardDiv.className = "col-sm-6 col-md-4 col-lg-3"
 
-    let musicImg=document.createElement("img")
+  let card = document.createElement("div")
+        card.className = "card"
+
+    let musicTitleH2 = document.createElement("h4")
+    musicTitleH2.innerText = music.title
+   musicTitleH2.className = "card-title"
+
+    let musicImg=document.createElement("iframe")
         musicImg.src = music.link
         musicImg.alt = music.title
-        musicImg.classList.add("music-avatar")
+        musicImg.width = 300
+        musicImg.height = 380
+        musicImg.frameborder = 0
+        musicImg.allowtransparency = "true"
+        musicImg.allow = "encrypted-media"
+       musicImg.className = "card-img-top"
+
+       let cardBody = document.createElement("div")
+       cardBody.className = "card-body"
+
 
     let musicLikesP = document.createElement("p")
         musicLikesP.innerText = `${music.likes} Likes`
-   
+        musicLikesP.className = "card-text"
     let likeButton = document.createElement("button")
         likeButton.classList.add("like-btn")
         likeButton.innerText = "Like ❤️"
@@ -41,8 +54,11 @@ let turnMusicToHTML = (music) => {
         purchaseButton.classList.add("purchase-btn")
         purchaseButton.innerText = "Buy 🛒"
 
-        mainDiv.append(musicTitleH2, musicImg, musicLikesP, musicTitleH3, likeButton, purchaseButton)
-
+       // musicCardDiv.append(musicTitleH2, musicImg, musicLikesP, musicTitleH3, likeButton, purchaseButton)
+       musicCardDiv.append(card) 
+       card.append(musicImg, cardBody)
+       cardBody.append(musicTitleH2, musicLikesP, likeButton, purchaseButton)
+       row.append(musicCardDiv)
 
 
         likeButton.addEventListener("click", (evt) =>{
